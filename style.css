@@ -1,0 +1,160 @@
+        body {
+            background-color: whitesmoke;
+            margin: 0;
+        }
+
+        .header {
+            background-color: rgba(135, 207, 235, 0.37);
+            height: 100px;
+            width: 100%;
+            display: flex;
+            justify-content: center;        
+            align-items: center;
+        }
+
+        .header a{
+            margin: 35px;
+            color: black;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 17px;
+            font-weight: 500;
+            text-decoration: none;
+    }
+
+        .footer {
+            background-color: whitesmoke;
+            height: 90px;
+            width: 100%;
+            display: flex;
+            justify-content: center;        
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color:black;
+        }
+        
+        h2 {
+            font-size: 28px;
+            font-family: Arial, sans-serif;
+            font-weight: bold; /* Fettdruck für h2 */
+            margin-top: 100px;
+            margin-left: 100px;
+            margin-bottom: 5px;
+            color: black;
+        }        
+
+        .bild-mit-text {
+      
+            display: flex;  
+            gap: 100px;                     /* Abstand zwischen Bild und Text */
+            justify-content: flex-start;    /* Inhalt linksbündig */
+            margin-left: 100px;             /* Abstand vom linken Rand */
+            margin-right: 100px;
+            margin-top: 0px;
+        
+        }
+    
+        .bild-mit-text img {
+            height: 250px;                      /* Bild passt sich der Höhe des Texts an */
+         }
+
+        .text {
+            font-size: 17px;                    /* Textgröße */
+            font-family: Arial, sans-serif;     /* Schriftart */
+            line-height: 1.3;                   /* Zeilenhöhe (Abstand zwischen Zeilen) */
+            letter-spacing: 1px;                /* Abstand zwischen Buchstaben */
+            word-spacing: 5px;                  /* Abstand zwischen Wörtern */
+            margin-top: 30px;                   /* Abstand nach oben */
+            margin-bottom: 20px;                /* Abstand nach unten */
+            color:black;
+        }   
+        
+        .texttable {
+            font-size: 17px;                    /* Textgröße */
+            font-family: Arial, sans-serif;     /* Schriftart */
+            line-height: 1.3;                   /* Zeilenhöhe (Abstand zwischen Zeilen) */
+            letter-spacing: 1px;                /* Abstand zwischen Buchstaben */
+            word-spacing: 5px;                  /* Abstand zwischen Wörtern */
+            margin-top: 0px;                   /* Abstand nach oben */
+            margin-bottom: 0px;                /* Abstand nach unten */
+            color:black;
+        }
+
+        .table-container {
+            margin-top: 0px;                 /* Abstand der Tabelle (div) nach oben */
+        }
+
+
+        table {
+           
+            width: calc(100% - 200px);      /* Gesamtbreite minus 100px links & rechts */
+            margin-left: 100px;  
+            margin-right: 100px;          
+            border-collapse: collapse;      /* Rahmen werden zusammengefasst */
+            background-color: white;
+        }
+
+        th, td {
+            border: 2px solid black;      /* Rahmen um jede Zelle */
+            padding: 12px 18px;             /* Innenabstand */
+            text-align: left;               /* Text linksbündig */
+        }
+
+        th {
+            background-color: rgba(135, 207, 235, 0.37);    /* grauer Hintergrund für Kopfzeile */
+            font-weight: bold;                /* Fettdruck für Kopfzeile */
+        }
+
+
+
+
+/* Button-Styling */
+#modeToggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: 1px solid gray;
+  border-radius: 50%;
+  font-size: 20px;
+  padding: 5px 8px;
+  cursor: pointer;
+}
+
+/* ========================= */
+/* Ergänzungen für Textfarbe */
+/* ========================= */
+
+/* Standard (Tag-Modus) */
+body {
+  color: black;
+  background-color: whitesmoke;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Nachtmodus */
+body.dark {
+  color: white;
+  background-color: #1e1e1e;
+}
+
+/* Überschreibe feste Textfarben, damit sie vom body erben */
+h1, h2, .text, .texttable, th, td {
+  color: inherit;
+}
+
+/* Footer (nutzt gleiche Übergänge & erbt Farbe vom body, aber eigener Hintergrund) */
+.footer {
+  background-color: whitesmoke;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark .footer {
+  background-color: #1f1f1f; /* dunkler Hintergrund */
+}
+
