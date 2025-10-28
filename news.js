@@ -1,7 +1,7 @@
 (function () {
-  const NEWS_JSON_PATH = "assets/news.json";   // Pfad ggf. anpassen
+  const NEWS_JSON_PATH = "assetsnews.json";   // Pfad ggf. anpassen
   const list = document.getElementById("news-list");
-  const FALLBACK_IMAGE = "assets/news_fallback.jpg"; // optional
+  const FALLBACK_IMAGE = "assetsnews_fallback.jpg"; // optional
 
   const fmtDate = (iso) => {
     try {
