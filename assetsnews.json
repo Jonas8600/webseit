@@ -1,0 +1,16 @@
+[
+  {
+    "title": "Neues GIS-Projekt gestartet",
+    "date": "2025-10-15",
+    "image": "assets/news_gis.jpg",
+    "text": "Ich starte ein Projekt zur automatisierten Auswertung von Orthofotos. Erste Ergebnisse folgen in Kürze.",
+    "link": "https://github.com/deinUser/deinProjekt"
+  },
+  {
+    "title": "Vortrag an der Hochschule Mainz",
+    "date": "2025-09-28",
+    "image": "assets/news_talk.jpg",
+    "text": "Kurzer Impulsvortrag zu Geodaten-Workflows und Best Practices in QGIS.",
+    "link": "https://www.hs-mainz.de/"
+  }
+]
