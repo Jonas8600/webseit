@@ -338,3 +338,45 @@ body.dark .projects-error {
   background: #232323;
   border-color: #555;
 }
+
+/* ===== Kontakt-Icons unten rechts ===== */
+.contact-icons {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.contact-icons a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: white;
+  color: black;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.contact-icons a:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background-color: #e6f2ff;
+}
+
+/* ===== Darkmode-Version ===== */
+body.dark .contact-icons a {
+  background-color: #1f1f1f;
+  color: white;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+body.dark .contact-icons a:hover {
+  background-color: #333;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
