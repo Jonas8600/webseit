@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Projekte</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Deine globale CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+
+  <style>
+    /* --- Minimales Layout für die Projekte-Seite (ergänzt zu deiner style.css) --- */
+    .projects-layout{
+      display:grid;
+      grid-template-columns:1.2fr 1fr; /* Karte links, Cards rechts */
+      gap:24px;
+      width:calc(100% - 200px);
+      margin:0 100px 60px 100px;
+    }
+    #map{
+      width:100%;
+      height:420px;
+      border-radius:12px;
+      overflow:hidden;
+      border:1.5px solid #cfcfcf;
+    }
+    .projects-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
+    }
+    .project-card{
+      display:block;
+      background:white;
+      color:inherit;
+      border:1.5px solid #cfcfcf;
+      border-radius:12px;
+      overflow:hidden;
+      text-decoration:none;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .project-card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 6px 18px rgba(0,0,0,.12);
+      border-color:#b8b8b8;
+    }
+    .project-card img{
+      width:100%;
+      height:140px;
+      object-fit:cover;
+    }
+    .project-body{ padding:12px 14px 14px; }
+    .project-body h3{ margin:0 0 6px; font:600 18px/1.3 Arial, sans-serif; }
+    .project-body p{ margin:0; line-height:1.45; letter-spacing:.2px; }
+    .project-card.active{ outline:3px solid #80bfff; }
+
+    /* Responsive */
+    @media (max-width:1100px){
+      .projects-layout{ grid-template-columns:1fr; }
+      #map{ height:360px; }
+    }
+
+    /* Dark Mode Ergänzungen */
+    body.dark #map{ border-color:#4c4c4c; }
+    body.dark .project-card{ background:#1f1f1f; border-color:#4c4c4c; }
+    body.dark .project-card:hover{ box-shadow:0 6px 18px rgba(0,0,0,.35); border-color:#5a5a5a; }
+  </style>
+</head>
+
+<body>
+  <!-- Header wie auf deinen anderen Seiten -->
+  <div class="header">
+    <a href="index.html">Über mich</a>
+    <a href="News.html">News</a>
+    <a href="Projekte.html">Projekte</a>
+  </div>
+
+  <!-- Dark/Light Button -->
+  <button id="modeToggle">🌙</button>
+
+  <h2>Projekte</h2>
+
+  <div class="projects-layout">
+    <div id="map"></div>
+    <div id="projects-list" class="projects-grid"></div>
+  </div>
+
+  <!-- Darkmode-Logik wie auf deinen anderen Seiten -->
+  <script>
+    (function () {
+      const STORAGE_KEY = 'theme';
+      const btn = document.getElementById('modeToggle');
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = saved || (prefersDark ? 'dark' : 'light');
+      apply(initial);
+
+      btn.addEventListener('click', () => {
+        const next = document.body.classList.contains('dark') ? 'light' : 'dark';
+        apply(next);
+        localStorage.setItem(STORAGE_KEY, next);
+        document.dispatchEvent(new CustomEvent('themechange', { detail: { mode: next } }));
+      });
+
+      function apply(mode) {
+        document.body.classList.toggle('dark', mode === 'dark');
+        btn.textContent = mode === 'dark' ? '☀️' : '🌙';
+      }
+    })();
+  </script>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+
+  <!-- Projekte ohne JSON: alles in diesem Script -->
+  <script>
+    (function () {
+      // =======================
+      // 1) Projekte HIER pflegen
+      // =======================
+      const PROJECTS = [
+        {
+          title: "Orthofoto-Auswertung",
+          text: "Automatisierte Analyse von Orthofotos mit Python & QGIS.",
+          link: "https://github.com/deinUser/orthofoto-auswertung",
+          image: "proj_ortho.jpg",      // optional: Bilddatei im gleichen Ordner; sonst Feld weglassen
+          lat: 49.998, lng: 8.272       // Mainz
+        },
+        {
+          title: "Feldvermessung Rhein-Hunsrück",
+          text: "GNSS-Messkampagne inkl. Ausgleichung und Qualitätsbericht.",
+          link: "https://github.com/deinUser/feldvermessung",
+          image: "proj_field.jpg",
+          lat: 50.107, lng: 7.728
+        },
+        {
+          title: "Webkarte Trier",
+          text: "POI-Viewer für Trier mit Leaflet und GeoJSON.",
+          link: "https://deinportfolio.example.com/trier-map",
+          image: "proj_trier.jpg",
+          lat: 49.756, lng: 6.644
+        }
+      ];
+
+      const listEl = document.getElementById("projects-list");
+
+      // ---- Leaflet Map ----
+      const map = L.map("map", { center: [50.0, 8.2], zoom: 7, zoomControl: true });
+
+      // Hell/Dunkel Tiles
+      const lightTiles = L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        { attribution: "&copy; OpenStreetMap", maxZoom: 19 }
+      );
+      const darkTiles = L.tileLayer(
+        "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+        { attribution: "&copy; Carto, OpenStreetMap", maxZoom: 19 }
+      );
+
+      // initialer Tile-Layer je nach Theme
+      const isDark = document.body.classList.contains("dark");
+      (isDark ? darkTiles : lightTiles).addTo(map);
+
+      // Theme-Wechsel live auf Karte anwenden
+      document.addEventListener("themechange", (e) => {
+        const mode = e.detail.mode;
+        if (mode === "dark") { map.removeLayer(lightTiles); darkTiles.addTo(map); }
+        else { map.removeLayer(darkTiles); lightTiles.addTo(map); }
+      });
+
+      const markerGroup = L.layerGroup().addTo(map);
+
+      function fitToMarkers() {
+        const bounds = L.latLngBounds([]);
+        markerGroup.eachLayer(m => bounds.extend(m.getLatLng()));
+        if (bounds.isValid()) map.fitBounds(bounds.pad(0.2));
+      }
+
+      // 2) Eine Projektkarte (DOM) bauen
+      function createCard(p, idx, marker) {
+        const a = document.createElement("a");
+        a.className = "project-card";
+        a.href = p.link || "javascript:void(0)";
+        a.target = p.link ? "_blank" : "_self";
+        a.rel = p.link ? "noopener" : "";
+
+        if (p.image) {
+          const img = document.createElement("img");
+          img.src = p.image;
+          img.alt = p.title || "Projekt";
+          img.loading = "lazy";
+          a.appendChild(img);
+        }
+
+        const body = document.createElement("div");
+        body.className = "project-body";
+
+        const h = document.createElement("h3");
+        h.textContent = p.title || `Projekt ${idx + 1}`;
+
+        const t = document.createElement("p");
+        t.textContent = p.text || "";
+
+        body.append(h, t);
+        a.appendChild(body);
+
+        // Klick auf Card -> Marker fokussieren
+        a.addEventListener("click", (ev) => {
+          if (!p.link) ev.preventDefault();
+          if (marker) {
+            map.setView(marker.getLatLng(), Math.max(map.getZoom(), 12), { animate: true });
+            marker.openPopup();
+          }
+        });
+
+        return a;
+      }
+
+      // 3) Rendern: Marker + Cards
+      function renderProjects() {
+        listEl.innerHTML = "";
+        markerGroup.clearLayers();
+
+        PROJECTS.forEach((p, idx) => {
+          let marker = null;
+          if (typeof p.lat === "number" && typeof p.lng === "number") {
+            marker = L.marker([p.lat, p.lng]).addTo(markerGroup);
+            const popupHtml = `
+              <div style="min-width:180px">
+                <strong>${p.title || "Projekt"}</strong><br/>
+                ${p.text ? `<small>${p.text}</small><br/>` : ""}
+                ${p.link ? `<a href="${p.link}" target="_blank" rel="noopener">Mehr erfahren</a>` : ""}
+              </div>`;
+            marker.bindPopup(popupHtml);
+
+            // Marker-Klick -> passende Card hervorheben
+            marker.on("click", () => {
+              document.querySelectorAll(".project-card").forEach(el => el.classList.remove("active"));
+              const card = document.querySelector(`.project-card[data-idx="${idx}"]`);
+              if (card) { card.classList.add("active"); card.scrollIntoView({ behavior: "smooth", block: "nearest" }); }
+            });
+          }
+
+          const card = createCard(p, idx, marker);
+          card.dataset.idx = String(idx);
+          listEl.appendChild(card);
+        });
+
+        fitToMarkers();
+      }
+
+      renderProjects();
+    })();
+  </script>
+</body>
+</html>
+
+<!-- So passt du Projekte an
+Öffne die Datei und bearbeite das Array PROJECTS (Titel, Text, Link, Bild, lat/lng).
+Wenn du kein Bild hast, lass image einfach weg.
+Wenn ein Projekt keine Koordinaten hat, wird nur die Karte nicht darauf zoomen (Kartenbereich bleibt trotzdem sichtbar).
+Wenn du mir kurz die drei Projekte gibst (Titel, Kurztext, Link, Koordinaten, Bildpfad), trage ich sie dir direkt ein.
