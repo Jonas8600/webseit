@@ -15,7 +15,7 @@
 
     <div class="header"> 
 
-            <a href="Uebung1.html">Über mich</a></li>
+            <a href="index.html">Über mich</a></li>
             <a href="News.html">News</a></li>
             <a href="Projekte.html">Projekte</a></li>
 
@@ -27,10 +27,12 @@
     <h2>Über mich</h2>
 
     <div class="bild-mit-text">
-        <img src="ich.png">
+        <img src="Ich.png">
         <p class="text">
-           text
-            
+            Hallo, ich bin Jonas!<br>
+            Ich bin 25 Jahre alt und studiere aktuell Geoinformatik und Vermessung an der Hochschule Mainz. 
+            Zuvor habe ich eine Ausbildung zum Vermessungstechniker im Vermessungsbüro Müller in Mainz erfolgreich abgeschlossen. 
+            Dort bin ich weiterhin als Werkstudent tätig und sammle wertvolle Praxiserfahrung neben dem Studium.  
         </p>
     </div>
 
@@ -68,6 +70,31 @@
 
     </table>
     </div>
+
+    <script>
+        (function () {
+            const STORAGE_KEY = 'theme';            // gemeinsam genutzter Schlüssel
+            const btn = document.getElementById('modeToggle');
+
+            // gespeichertes Theme oder OS-Vorliebe bestimmen
+            const saved = localStorage.getItem(STORAGE_KEY);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const initial = saved || (prefersDark ? 'dark' : 'light');
+            apply(initial);
+
+            // Klick schaltet um und speichert
+            btn.addEventListener('click', () => {
+            const next = document.body.classList.contains('dark') ? 'light' : 'dark';
+            apply(next);
+            localStorage.setItem(STORAGE_KEY, next);
+            });
+
+            function apply(mode) {
+            document.body.classList.toggle('dark', mode === 'dark');
+            btn.textContent = mode === 'dark' ? '☀️' : '🌙';
+            }
+        })();
+    </script>
 
     <div class="footer"> 
     </div>
