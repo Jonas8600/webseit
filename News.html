@@ -1,52 +1,49 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="de">
 <head>
-    <title>Infos über mich</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="style.css">
-
+  <meta charset="utf-8" />
+  <title>News</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 
-    <body>
- 
-            <div class="header"> 
+<body>
+  <div class="header">
+    <a href="index.html">Über mich</a>
+    <a href="News.html">News</a>
+    <a href="Projekte.html">Projekte</a>
+  </div>
 
-            <a href="Uebung1.html">Über mich</a></li>
-            <a href="News.html">News</a></li>
-            <a href="Projekte.html">Projekte</a></li>
+  <button id="modeToggle">🌙</button>
 
-    </div>
+  <h2>News</h2>
+  <!-- Hier werden die News-Karten eingefügt -->
+  <div id="news-list" class="news-grid"></div>
 
-    <button id="modeToggle">🌙</button>
+  <!-- Darkmode-Logik (dein vorhandenes Script) -->
+  <script>
+    (function () {
+      const STORAGE_KEY = 'theme';
+      const btn = document.getElementById('modeToggle');
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = saved || (prefersDark ? 'dark' : 'light');
+      apply(initial);
 
-    <script>
-        (function () {
-            const STORAGE_KEY = 'theme';            // gemeinsam genutzter Schlüssel
-            const btn = document.getElementById('modeToggle');
+      btn.addEventListener('click', () => {
+        const next = document.body.classList.contains('dark') ? 'light' : 'dark';
+        apply(next);
+        localStorage.setItem(STORAGE_KEY, next);
+      });
 
-            // gespeichertes Theme oder OS-Vorliebe bestimmen
-            const saved = localStorage.getItem(STORAGE_KEY);
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const initial = saved || (prefersDark ? 'dark' : 'light');
-            apply(initial);
+      function apply(mode) {
+        document.body.classList.toggle('dark', mode === 'dark');
+        btn.textContent = mode === 'dark' ? '☀️' : '🌙';
+      }
+    })();
+  </script>
 
-            // Klick schaltet um und speichert
-            btn.addEventListener('click', () => {
-            const next = document.body.classList.contains('dark') ? 'light' : 'dark';
-            apply(next);
-            localStorage.setItem(STORAGE_KEY, next);
-            });
-
-            function apply(mode) {
-            document.body.classList.toggle('dark', mode === 'dark');
-            btn.textContent = mode === 'dark' ? '☀️' : '🌙';
-            }
-        })();
-    </script>
-
-
-    </body>
-
-
+  <!-- News-Loader -->
+  <script src="news.js"></script>
+</body>
 </html>

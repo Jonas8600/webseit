@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Infos über mich</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+    <body>
+ 
+            <div class="header"> 
+
+            <a href="index.html">Über mich</a></li>
+            <a href="News.html">News</a></li>
+            <a href="Projekte.html">Projekte</a></li>
+
+    </div>
+
+    <button id="modeToggle">🌙</button>
+
+    <script>
+        (function () {
+            const STORAGE_KEY = 'theme';            // gemeinsam genutzter Schlüssel
+            const btn = document.getElementById('modeToggle');
+
+            // gespeichertes Theme oder OS-Vorliebe bestimmen
+            const saved = localStorage.getItem(STORAGE_KEY);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const initial = saved || (prefersDark ? 'dark' : 'light');
+            apply(initial);
+
+            // Klick schaltet um und speichert
+            btn.addEventListener('click', () => {
+            const next = document.body.classList.contains('dark') ? 'light' : 'dark';
+            apply(next);
+            localStorage.setItem(STORAGE_KEY, next);
+            });
+
+            function apply(mode) {
+            document.body.classList.toggle('dark', mode === 'dark');
+            btn.textContent = mode === 'dark' ? '☀️' : '🌙';
+            }
+        })();
+    </script>
+
+
+    </body>
+
+
+</html>
