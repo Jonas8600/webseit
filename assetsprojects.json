@@ -4,20 +4,23 @@
     "text": "Automatisierte Analyse von Orthofotos mit Python & QGIS.",
     "link": "https://github.com/deinUser/orthofoto-auswertung",
     "image": "assets/proj_ortho.jpg",
-    "lat": 49.998, "lng": 8.272   
+    "lat": 49.998, 
+    "lng": 8.272   
   },
   {
-    "title": "Feldvermessung Rhein-Hunsr�ck",
-    "text": "GNSS-Messkampagne inkl. Ausgleichung und Qualit�tsbericht.",
+    "title": "Feldvermessung Rhein-Hunsrck",
+    "text": "GNSS-Messkampagne inkl. Ausgleichung und Qualittsbericht.",
     "link": "https://github.com/deinUser/feldvermessung",
     "image": "assets/proj_field.jpg",
-    "lat": 50.107, "lng": 7.728   
+    "lat": 50.107, 
+    "lng": 7.728   
   },
   {
     "title": "Webkarte Trier",
-    "text": "POI-Viewer f�r Trier mit Leaflet und GeoJSON.",
+    "text": "POI-Viewer fr Trier mit Leaflet und GeoJSON.",
     "link": "https://deinportfolio.example.com/trier-map",
     "image": "assets/proj_trier.jpg",
-    "lat": 49.756, "lng": 6.644   
+    "lat": 49.756, 
+    "lng": 6.644   
   }
 ]
