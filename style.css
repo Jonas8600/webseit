@@ -260,3 +260,81 @@ body.dark .news-error {
   background: #232323;
   border-color: #555;
 }
+
+/* ===== Projekte Layout ===== */
+.projects-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr; /* Karte links, Cards rechts */
+  gap: 24px;
+  width: calc(100% - 200px);
+  margin: 0 100px 60px 100px;
+}
+#map {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1.5px solid #cfcfcf;
+}
+
+/* Karten/Teaser rechts */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.project-card {
+  display: block;
+  background: white;
+  color: inherit;
+  border: 1.5px solid #cfcfcf;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background-color .15s ease;
+}
+.project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.12);
+  border-color: #b8b8b8;
+}
+.project-card.active { outline: 3px solid #80bfff; }
+
+.project-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+.project-body { padding: 12px 14px 14px; }
+.project-body h3 { margin: 0 0 6px; font: 600 18px/1.3 Arial, sans-serif; }
+.project-body p { margin: 0; line-height: 1.45; letter-spacing: .2px; }
+
+.projects-empty, .projects-error {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px dashed #bbb;
+  background: #f7f7f7;
+}
+
+/* Responsiv */
+@media (max-width: 1100px) {
+  .projects-layout {
+    grid-template-columns: 1fr;
+  }
+  #map { height: 360px; }
+}
+
+/* ===== Dark Mode ===== */
+body.dark #map { border-color: #4c4c4c; }
+body.dark .project-card {
+  background: #1f1f1f;
+  border-color: #4c4c4c;
+}
+body.dark .project-card:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+  border-color: #5a5a5a;
+}
+body.dark .projects-empty, 
+body.dark .projects-error {
+  background: #232323;
+  border-color: #555;
+}
